@@ -54,10 +54,18 @@ def mainMenu():
 def hardwareInfo():
 
     #print hardware information
-    print("CPU: " + psutil.cpu_info())
+    print("CPU: " + psutil.cpu_info().brand)
+    print("CPU Cores: " + str(psutil.cpu_count(logical = False)) + " physical, " + str(psutil.cpu_count()) + " total")
+    print("RAM: " + str(psutil.virtual_memory().total / 1024 / 1024) + " MB")
+    print("Swap: " + str(psutil.swap_memory().total / 1024 / 1024) + " MB")
+    print("Disk Usage: " + str(psutil.disk_usage('/').used / 1024 / 1024) + " MB used out of " + str(psutil.disk_usage('/').total / 1024 / 1024) + " MB")
+    print("Battery: " + str(psutil.sensors_battery().percent) + "% (" + ("charging" if psutil.sensors_battery().power_plugged else "discharging") + ")")
+    #print("Network Usage: " + str(psutil.net_io_counters().bytes_sent / 1024 / 1024) + " MB sent, " + str(psutil.net_io_counters().bytes_recv / 1024 / 1024) + " MB received")
 
 
-    pass
+def systemPerformance():
+
+    pass  
 
 #call mainMenu() to start program
 mainMenu()
