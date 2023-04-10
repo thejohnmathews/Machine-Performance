@@ -1,6 +1,9 @@
 #Michael Harris and John Mathews
 #Machine Perfromance | CPSC 4240
 
+#import libraries
+import psutil
+
 #mainMenu(): Display a main menu to the user to navigate program
 def mainMenu():
     
@@ -50,6 +53,8 @@ def mainMenu():
 #hardwareInfo(): 
 def hardwareInfo():
 
+    #print hardware information
+    print("CPU: " + psutil.cpu_info())
 
 
     pass
