@@ -18,7 +18,7 @@ def mainMenu():
     print("1) System Hardware Information")
     print("2) System Performance")
     print("4) System Energy Usage")
-    print("5) Current Processes")
+    print("5) Current Process Information")
     print("6) Network Information")
     print("7) Quit Program")
     print( )
