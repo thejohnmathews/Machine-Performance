@@ -9,8 +9,10 @@ import platform
 def mainMenu():
     
     #prompt user
+    print( )
     print("Welcome to Machine Performance for Ubuntu Linux!")
     print("Select an option to continue:")
+    print( )
 
     #menu choices
     print("1) System Hardware Information")
@@ -19,6 +21,7 @@ def mainMenu():
     print("5) Current Processes")
     print("6) Network Information")
     print("7) Quit Program")
+    print( )
 
     #prompt user input
     userChoice = input("Enter a menu option (1-7): ")
@@ -56,6 +59,7 @@ def hardwareInfo():
 
 
     #print hardware information
+    print( )
     print("CPU: " + platform.processor())
     print("CPU Cores: " + str(psutil.cpu_count(logical = False)) + " physical, " + str(psutil.cpu_count()) + " total")
     print("RAM: " + str(psutil.virtual_memory().total / 1024 / 1024) + " MB")
@@ -65,6 +69,7 @@ def hardwareInfo():
     #print battery life if the system is a laptop
     if psutil.sensors_battery() is not None:
         print("Battery: " + str(psutil.sensors_battery().percent) + "% (" + ("charging" if psutil.sensors_battery().power_plugged else "discharging") + ")")
+    print( )
 
 
 def systemPerformance():
@@ -75,6 +80,7 @@ def processInfo():
     print( )
     print("Process Information Menu:")
     print("Select an option to continue:")
+    print( )
 
     #menu choices
     print("1) Show Current Process IDs")
@@ -82,7 +88,9 @@ def processInfo():
     print("3) Show children processes of a specific PID")
     print("4) Show parent processes of a specific PID")
     print("5) Show current status of a specific PID")
+    print("9) Return to Main Menu")
     print("10) Quit Program")
+    print( )
 
     #prompt user input
     userChoice = input("Enter a menu option (1-7): ")
@@ -98,7 +106,7 @@ def processInfo():
         print(str(psutil.pids()))
         print( )
         userPID = input("Enter the PID to search for: ")
-        print(str(psutil.Process(int(userPID))))
+        print("Process " + userPID + "'s Information: " +  str(psutil.Process(int(userPID))))
         pass
     elif userChoice == "3":
         print( )
@@ -107,7 +115,7 @@ def processInfo():
         print( )
         userPID = input("Enter the PID to search for children: ")
         p = psutil.Process(int(userPID))
-        print(str(p.children(recursive = True)))
+        print("Process " + userPID + "'s Children: " + str(p.children(recursive = True)))
         pass
     elif userChoice == "4":
         print( )
@@ -116,25 +124,31 @@ def processInfo():
         print( )
         userPID = input("Enter the PID to search for parents: ")
         p = psutil.Process(int(userPID))
-        print(str(p.parents()))
+        print("Process " + userPID + "'s Parents: " + str(p.parents()))
         pass
     elif userChoice == "5":
         print( )
         print("Current Processes:")
         print(str(psutil.pids()))
         print( )
-        userPID = input("Enter the PID to search for status:")
-        print(str(userPID.status()))
+        userPID = input("Enter the PID to search for status: ")
+        p = psutil.Process(int(userPID))
+        print("Process " + userPID + "'s Status: " + str(p.status()))
         pass
     elif userChoice == "6":
 
+        pass
+    elif userChoice == "9":
+        mainMenu()
         pass
     elif userChoice == "10":
         exit()
     else:
         print("Invalid choice. Please enter a menu option again.")
 
-    processInfo()
+    
+    if(userChoice != 9):
+        processInfo()
 
     pass
     
