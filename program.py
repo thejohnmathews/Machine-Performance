@@ -7,6 +7,7 @@ import platform
 
 #mainMenu(): Display a main menu to the user to navigate program
 def mainMenu():
+
     #Title
     print("\nWelcome to Machine Performance for Ubuntu Linux!")
     print("Select an option to continue:\n")
@@ -22,36 +23,36 @@ def mainMenu():
     #Prompt user input
     userChoice = input("Enter a menu option (1-7): ")
 
+    #logic ladder for menu options
     if userChoice == "1":
         hardwareInfo()
-        pass
+
     elif userChoice == "2":
-
         pass
+
     elif userChoice == "3":
-
         pass
+        
     elif userChoice == "4":
-
         pass
+
     elif userChoice == "5":
         processInfo()
-        pass
+
     elif userChoice == "6":
-
         pass
-    elif userChoice == "7":
 
+    elif userChoice == "7":
         exit()
+
     else:
         print("Invalid choice. Please enter a menu option again.")
 
     #call mainMenu() to continue to show options
     mainMenu()
 
-#hardwareInfo(): 
+#hardwareInfo(): Displays basic hardware components of system
 def hardwareInfo():
-
 
     #print hardware information
     print("\nCPU: " + platform.processor())
@@ -64,15 +65,17 @@ def hardwareInfo():
     #print battery life if the system is a laptop
     if psutil.sensors_battery() is not None:
         print("Battery: " + str(psutil.sensors_battery().percent) + "% (" + ("charging" if psutil.sensors_battery().power_plugged else "discharging") + ")")
+
     print("\n")
 
 
 def systemPerformance():
 
-    pass  
+    pass
 
 #processInfo(): Function containing menu logic and calculations involving the process option
 def processInfo():
+
     #Title
     print("\nCurrent Process Information Menu:")
     print("Select an option to continue:\n")
@@ -92,12 +95,14 @@ def processInfo():
 
     #Prompt user input
     userChoice = input("Enter a menu option (1-11): ")
+
+
     if userChoice == "1":
         #Show current processes and information about them
         print("\nCurrent Processes:")
         print(str(psutil.pids()))
         print(str(psutil.test()))
-        pass
+        
     elif userChoice == "2":
         #Show current processes
         print("\nCurrent Processes:")
@@ -108,7 +113,7 @@ def processInfo():
         print("Process " + userPID + "'s Input/Output Counters: " +  str(p.io_counters()))
         print("Process " + userPID + "'s Connections: " +  str(p.connections(kind='tcp')))
         print("Process " + userPID + "'s Threads: " +  str(p.threads()))
-        pass
+        
     elif userChoice == "3":
         #Show current processes
         print("\nCurrent Processes:")
@@ -116,7 +121,7 @@ def processInfo():
         userPID = input("Enter the PID to search for children: ")
         p = psutil.Process(int(userPID))
         print("Process " + userPID + "'s Children: " + str(p.children(recursive = True)) + "\n")
-        pass
+        
     elif userChoice == "4":
         #Show current processes
         print("\nCurrent Processes:")
@@ -124,7 +129,7 @@ def processInfo():
         userPID = input("Enter the PID to search for parents: ")
         p = psutil.Process(int(userPID))
         print("Process " + userPID + "'s Parents: " + str(p.parents()))
-        pass
+        
     elif userChoice == "5":
         #Show current processes
         print("\nCurrent Processes:")
@@ -132,7 +137,7 @@ def processInfo():
         userPID = input("Enter the PID to search for status: ")
         p = psutil.Process(int(userPID))
         print("Process " + userPID + "'s Status: " + str(p.status()))
-        pass
+        
     elif userChoice == "6":
         #Show current processes
         print("\nCurrent Processes:")
@@ -140,7 +145,7 @@ def processInfo():
         userPID = input("Enter the PID to search for CPU time: ")
         p = psutil.Process(int(userPID))
         print("Process " + userPID + "'s CPU Time: " + str(p.cpu_times()))
-        pass
+        
     elif userChoice == "7":
         #Show current processes
         print("\nCurrent Processes:")
@@ -149,7 +154,7 @@ def processInfo():
         p = psutil.Process(int(userPID))
         print("Process " + userPID + "'s Memory Info: " + str(p.memory_info()))
         print("Process " + userPID + "'s Memory Maps: " + str(p.memory_maps()))
-        pass
+        
     elif userChoice == "8":
         #Show current processes
         
@@ -158,15 +163,15 @@ def processInfo():
         userPID = input("Enter the PID to search for environment variables: ")
         p = psutil.Process(int(userPID))
         print("Process " + userPID + "'s Environment Variables: " + str(p.environ()) + "\n")
-        pass
+        
     elif userChoice == "9":
         #Call to function that handles process control
         processControl()
-        pass
+        
     elif userChoice == "10":
         #Call to function that handles the main menu
         mainMenu()
-        pass
+        
     elif userChoice == "11":
         #Call to exit program
         exit()
@@ -177,10 +182,11 @@ def processInfo():
     if(userChoice != 9):
         processInfo()
 
-    pass
+    
 
 #processControl(): Helper function that deals with the process control functionality and logic
 def processControl():
+
     #Title
     print("\nProcess Control Menu:")
     print("Select an option to continue:\n")
@@ -195,6 +201,7 @@ def processControl():
 
     #Prompt for user input
     userChoice = input("Enter a menu option (1-6): ")
+
     if userChoice == "1":
         #Show current processes
         print("\nCurrent Processes:")
@@ -205,7 +212,7 @@ def processControl():
         #Call specific function and state what has happened
         p.resume()
         print("Process " + userPID + " has been resumed.")
-        pass
+        
     elif userChoice == "2":
         #Show current processes
         print("\nCurrent Processes:")
@@ -216,7 +223,7 @@ def processControl():
         #Call specific function and state what has happened
         p.suspend()
         print("Process " + userPID + " has been suspended.")
-        pass
+        
     elif userChoice == "3":
         #Show current processes
         print("\nCurrent Processes:")
@@ -227,7 +234,7 @@ def processControl():
         #Call specific function and state what has happened
         p.terminate()
         print("Process " + userPID + " has been terminated.")
-        pass
+        
     elif userChoice == "4":
         #Show current processes
         print("\nCurrent Processes:")
@@ -238,7 +245,7 @@ def processControl():
         #Call specific function and state what has happened
         p.kill()
         print("Process " + userPID + " has been kill.")
-        pass
+        
     elif userChoice == "5":
         #Show current processes
         print("\nCurrent Processes:")
@@ -250,19 +257,17 @@ def processControl():
         #Call specific function and state what has happened
         p.wait(timeout = int(time))
         print("Process " + userPID + " has been forced to wait.")
-        pass
+        
     elif userChoice == "6":
         #Call back to process information function
         processInfo()
-        pass
+        
     else:
         #Error handler
         print("Invalid choice. Please enter a menu option again.")
 
     #Repeat until user selects to return to previous menu
     processControl()
-    pass
-    
 
 #Call mainMenu() to start program
 mainMenu()
