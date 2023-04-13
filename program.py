@@ -29,7 +29,7 @@ def mainMenu():
 
     elif userChoice == "2":
         pass
-
+    
     elif userChoice == "3":
         pass
         
@@ -40,11 +40,9 @@ def mainMenu():
         networkInfo()
 
     elif userChoice == "6":
-        #Exit the program
         exit()
 
     else:
-        #Error Handler
         print("Invalid choice. Please enter a menu option again.")
 
     #call mainMenu() to continue to show options
@@ -70,8 +68,31 @@ def hardwareInfo():
 
     print("\n")
 
-
+#systemPerformance(): 
 def systemPerformance():
+
+    #CPU Usage - util, speed, num processes, threads, handles, uptime, caches
+
+    #Enable Utilization graph
+
+    #Memory - in usem available, committed, cached, speed
+
+    #Enable Memory Usage graph
+
+    #Disk - active time, avg response time, read speed, write speed, capacity
+
+    #Enable active time graph
+
+    #GPU - utilization, GPU mem
+
+    #Enable 3D graph?
+
+    pass
+
+#systemEnergy():
+def systemEnergy():
+
+
 
     pass
 
@@ -197,8 +218,6 @@ def processInfo():
     if(userChoice != 9):
         processInfo()
 
-    
-
 #processControl(): Helper function that deals with the process control functionality and logic
 def processControl():
 
@@ -284,6 +303,7 @@ def processControl():
     #Repeat until user selects to return to previous menu
     processControl()
 
+#networkInfo():
 def networkInfo():
      #Title
     print("\nNetwork Information Menu:")
@@ -326,7 +346,8 @@ def networkInfo():
 
     if(userChoice != 5):
         networkInfo()
-    
+
+#netowrkConnections():
 def networkConnections():
      #Title
     print("\nConnection Types Menu:")
