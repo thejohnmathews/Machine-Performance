@@ -31,7 +31,7 @@ def mainMenu():
         hardwareInfo()
 
     elif userChoice == "2":
-        pass
+        systemPerformance()
     
     elif userChoice == "3":
         pass
@@ -92,13 +92,13 @@ def systemPerformance():
     if userChoice == "1":
 
         #CPU Usage - util, speed, num processes, threads, handles, uptime, caches
-        print("\n CPU Utilization: " + psutil.cpu_percent())
-        print("\n CPU Speed: " + psutil.cpu_freq().current)
-        print("\n Number of Processes Running: " + len(psutil.process_iter()))
-        print("\n Number of Threads: " + psutil.Process().num_threads())
-        print("\n Number of Handles: " + psutil.Process().num_handles())
-        print("\n System Uptime: " + psutil.boot_time())
-        print("\n System Cache: " + psutil.disk_usage('/').percent)
+        print("\n CPU Utilization: " + str(psutil.cpu_percent()))
+        print("\n CPU Speed: " + str(psutil.cpu_freq().current))
+        print("\n Number of Processes Running: " + str(len(psutil.process_iter())))
+        print("\n Number of Threads: " + str(psutil.Process().num_threads()))
+        print("\n Number of Handles: " + str(psutil.Process().num_handles()))
+        print("\n System Uptime: " + str(psutil.boot_time()))
+        print("\n System Cache: " + str(psutil.disk_usage('/').percent))
 
         #Utilization Graph
         # Create a figure and axis for the graph
