@@ -93,25 +93,14 @@ def systemPerformance():
 
         #CPU Usage - util, speed, num processes, threads, handles, uptime, caches
         print("\n CPU Utilization: " + str(psutil.cpu_percent()))
-        print("\n CPU Speed: " + str(psutil.cpu_freq().current))
-        print("\n Number of Processes Running: " + str(len(psutil.process_iter())))
+        print("\n CPU Speed: " + str(round(psutil.cpu_freq().current / 1e9), 2) + "GHz")
+        print("\n Number of Processes Running: " + str(psutil.process_iter()))
         print("\n Number of Threads: " + str(psutil.Process().num_threads()))
-        print("\n Number of Handles: " + str(psutil.Process().num_handles()))
         print("\n System Uptime: " + str(psutil.boot_time()))
         print("\n System Cache: " + str(psutil.disk_usage('/').percent))
 
         #Utilization Graph
-        # Create a figure and axis for the graph
-        fig, ax = plt.subplots()
-        ax.set_xlim(0, 60) 
-        ax.set_ylim(0, 100) 
-        line, = ax.plot([], []) 
 
-        # Create the animation using the update function and a refresh interval of 1 second
-        ani = animation.FuncAnimation(fig, update, frames=range(1000), interval=1000, blit=True)
-
-        # Show the graph
-        plt.show()
         
     elif userChoice == "2":
         
@@ -149,23 +138,6 @@ def systemPerformance():
 
     if(userChoice != 5):
         systemPerformance()
-
-
-def update(frame):
-
-    # Get the current CPU utilization
-    cpu_percent = psutil.cpu_percent()
-
-    # Add the new data point to the graph
-    xdata, ydata = line.get_data()
-    xdata = np.append(xdata, frame)
-    ydata = np.append(ydata, cpu_percent)
-    line.set_data(xdata, ydata)
-
-    # Adjust the x-axis range to show the last 60 seconds of data
-    ax.set_xlim(max(0, frame-60), frame)
-
-    return line,
 
 #systemEnergy():
 def systemEnergy():
