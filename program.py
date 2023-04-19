@@ -71,23 +71,70 @@ def hardwareInfo():
 #systemPerformance(): 
 def systemPerformance():
 
-    #CPU Usage - util, speed, num processes, threads, handles, uptime, caches
+    #Title
+    print("\nSystem Performance Menu:")
+    print("Select an option to continue:\n")
 
-    #Enable Utilization graph
+    #Menu choices
+    print("1) Show CPU Performance")
+    print("2) Show Memory Performance")
+    print("3) Show Disk Performance")
+    print("4) Show GPU Performance")
+    print("5) Return to Main Menu")
+    print("6) Quit Program\n")
 
-    #Memory - in usem available, committed, cached, speed
+    #Prompt user input
+    userChoice = input("Enter a menu option (1-6): ")
 
-    #Enable Memory Usage graph
+    if userChoice == "1":
 
-    #Disk - active time, avg response time, read speed, write speed, capacity
+        #CPU Usage - util, speed, num processes, threads, handles, uptime, caches
+        print("\n CPU Utilization: " + psutil.cpu_percent())
+        print("\n CPU Speed: " + psutil.cpu_freq().current)
+        print("\n Number of Processes Running: " + len(psutil.process_iter()))
+        print("\n Number of Threads: " + psutil.Process().num_threads())
+        print("\n Number of Handles: " + psutil.Process().num_handles())
+        print("\n System Uptime: " + psutil.boot_time())
+        print("\n System Cache: " + psutil.disk_usage('/').percent)
 
-    #Enable active time graph
+        #Utilization Graph
+        
+    elif userChoice == "2":
+        
+        #Memory - in usem available, committed, cached, speed
 
-    #GPU - utilization, GPU mem
+        #Enable Memory Usage graph
+        pass
+        
+    elif userChoice == "3":
+        
+        #Disk - active time, avg response time, read speed, write speed, capacity
 
-    #Enable 3D graph?
+        #Enable active time graph
+        
+        pass
+        
+    elif userChoice == "4":
+        
+        #GPU - utilization, GPU mem
 
-    pass
+        #Enable 3D graph?
+        
+        pass
+        
+    elif userChoice == "5":
+        #Call to function that handles the main menu
+        mainMenu()
+        
+    elif userChoice == "6":
+        #Call to exit program
+        exit()
+    else:
+        #Error handler
+        print("Invalid choice. Please enter a menu option again.")
+
+    if(userChoice != 5):
+        systemPerformance()
 
 #systemEnergy():
 def systemEnergy():
