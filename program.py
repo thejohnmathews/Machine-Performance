@@ -4,6 +4,9 @@
 #Import Libraries
 import psutil
 import platform
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
 
 #mainMenu(): Display a main menu to the user to navigate program
 def mainMenu():
@@ -98,6 +101,17 @@ def systemPerformance():
         print("\n System Cache: " + psutil.disk_usage('/').percent)
 
         #Utilization Graph
+        # Create a figure and axis for the graph
+        fig, ax = plt.subplots()
+        ax.set_xlim(0, 60) 
+        ax.set_ylim(0, 100) 
+        line, = ax.plot([], []) 
+
+        # Create the animation using the update function and a refresh interval of 1 second
+        ani = animation.FuncAnimation(fig, update, frames=range(1000), interval=1000, blit=True)
+
+        # Show the graph
+        plt.show()
         
     elif userChoice == "2":
         
@@ -135,6 +149,23 @@ def systemPerformance():
 
     if(userChoice != 5):
         systemPerformance()
+
+
+def update(frame):
+
+    # Get the current CPU utilization
+    cpu_percent = psutil.cpu_percent()
+
+    # Add the new data point to the graph
+    xdata, ydata = line.get_data()
+    xdata = np.append(xdata, frame)
+    ydata = np.append(ydata, cpu_percent)
+    line.set_data(xdata, ydata)
+
+    # Adjust the x-axis range to show the last 60 seconds of data
+    ax.set_xlim(max(0, frame-60), frame)
+
+    return line,
 
 #systemEnergy():
 def systemEnergy():
