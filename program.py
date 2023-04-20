@@ -4,8 +4,7 @@
 #Import Libraries
 import psutil
 import platform
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
+import time
 
 
 #mainMenu(): Display a main menu to the user to navigate program
@@ -91,20 +90,33 @@ def systemPerformance():
 
     if userChoice == "1":
 
-        #CPU Usage - util, speed, num processes, threads, handles, uptime, caches
-        print("\n CPU Utilization: " + str(psutil.cpu_percent()))
-        print("\n CPU Speed: " + str(round(psutil.cpu_freq().current / 1e9), 2) + "GHz")
+        #CPU Usage - util, speed, num processes, threads, uptime, caches
+        print("\n CPU Utilization: " + str(psutil.cpu_percent()) + "%")
+        ghz = psutil.cpu_freq().current / 1000
+        print("\n CPU Speed: {:.2f}".format(ghz) + " GHz")
         print("\n Number of Processes Running: " + str(psutil.process_iter()))
         print("\n Number of Threads: " + str(psutil.Process().num_threads()))
         print("\n System Uptime: " + str(psutil.boot_time()))
         print("\n System Cache: " + str(psutil.disk_usage('/').percent))
 
-        #Utilization Graph
+        #prompt user
+        print("\nTo see CPU Utilization graph enter g. To go back to System Performance Menu, enter any other key.\n")
 
-        
+        #Utilization Graph
+        if input() == "g":
+            cpuUtilGraph()
+        else:
+            pass
+
+
     elif userChoice == "2":
         
-        #Memory - in usem available, committed, cached, speed
+        
+        #Memory - in use, speed, committed, cached
+        print("Current Memory Usage: {:.2f} GB".format(psutil.virtual_memory().used / 1024 / 1024 / 1024))
+        print("Memory Speed: {:.2f} GB".format(psutil.virtual_memory().total / 1024 / 1024 / 1024))
+        print("Committed Memory: {:.2f} GB".format(psutil.virtual_memory().percent / 100 * psutil.virtual_memory().total / 1024 / 1024 / 1024))
+        print("Cached Memory: {:.2f} GB".format(psutil.virtual_memory().cached / 1024 / 1024 / 1024))
 
         #Enable Memory Usage graph
         pass
@@ -112,6 +124,12 @@ def systemPerformance():
     elif userChoice == "3":
         
         #Disk - active time, avg response time, read speed, write speed, capacity
+        print("Disk Active Time: {}%".format(psutil.disk_io_counters().busy_time))
+        print("Average Response Time: {} ms".format(psutil.disk_io_counters().average_time))
+        print("Read Speed: {:.2f} GB/s".format(psutil.disk_io_counters().read_bytes/1024/1024/1024))
+        print("Write Speed: {:.2f} GB/s".format(psutil.disk_io_counters().write_bytes/1024/1024/1024))
+        print("Disk Capacity: {:.2f} GB".format(psutil.disk_usage('/').total/1024/1024/1024))
+        print("Number of Partitions: ", len(psutil.disk_partitions()))
 
         #Enable active time graph
         
@@ -132,12 +150,47 @@ def systemPerformance():
     elif userChoice == "6":
         #Call to exit program
         exit()
+
     else:
         #Error handler
         print("Invalid choice. Please enter a menu option again.")
 
     if(userChoice != 5):
         systemPerformance()
+
+def cpuUtilGraph():
+
+        #local variables
+        interval = 1
+        points = 20
+        util = []
+        x = "Time (seconds)"
+        y = "CPU Utilization (%)"
+
+        # Loop indefinitely
+        while True:
+
+            #get CPU Util & add
+            cpu_percent = psutil.cpu_percent()
+            util.append(cpu_percent)
+
+            #remove oldest value when exceeding axis value
+            if len(util) > points:
+                util.pop(0)
+
+            #set up the bar chart
+            numChars = [int(util / 5) for util in util]
+            rows = zip(*[" " * (10 - n) + "*" * n for n in numChars])
+            chart = "\n".join(["".join(row) for row in rows])
+
+            #x axis time
+            currentTime = time.time()
+            times = [currentTime - (points - i - 1) * interval for i in range(points)]
+
+            #print & wait
+            chart = f"{y}\n{chart}\n{x}\n"
+            print(f"\033c{chart}") 
+            time.sleep(interval)
 
 #systemEnergy():
 def systemEnergy():
