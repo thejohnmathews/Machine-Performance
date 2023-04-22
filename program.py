@@ -94,31 +94,34 @@ def systemPerformance():
         print("\n CPU Utilization: " + str(psutil.cpu_percent()) + "%")
         ghz = psutil.cpu_freq().current / 1000
         print("\n CPU Speed: {:.2f}".format(ghz) + " GHz")
-        print("\n Number of Processes Running: " + str(psutil.process_iter()))
+        print("\n Number of Processes Running: " + str(len(psutil.pids())))
         print("\n Number of Threads: " + str(psutil.Process().num_threads()))
-        print("\n System Uptime: " + str(psutil.boot_time()))
+        print("\n System Uptime: " + str(psutil.boot_time()) + "seconds")
         print("\n System Cache: " + str(psutil.disk_usage('/').percent))
 
         #prompt user
-        print("\nTo see CPU Utilization graph enter g. To go back to System Performance Menu, enter any other key.\n")
+        print("\nTo see 15 second CPU Utilization Graph enter g. To go to System Performance menu, enter any other key.\n")
 
         #Utilization Graph
         if input() == "g":
             cpuUtilGraph()
-        else:
-            pass
 
 
     elif userChoice == "2":
         
         
         #Memory - in use, speed, committed, cached
-        print("Current Memory Usage: {:.2f} GB".format(psutil.virtual_memory().used / 1024 / 1024 / 1024))
-        print("Memory Speed: {:.2f} GB".format(psutil.virtual_memory().total / 1024 / 1024 / 1024))
-        print("Committed Memory: {:.2f} GB".format(psutil.virtual_memory().percent / 100 * psutil.virtual_memory().total / 1024 / 1024 / 1024))
-        print("Cached Memory: {:.2f} GB".format(psutil.virtual_memory().cached / 1024 / 1024 / 1024))
+        print("\nCurrent Memory(RAM) Usage: {:.2f} GB".format(psutil.virtual_memory().used / 1024 / 1024 / 1024))
+        print("\nTotal Memory(RAM): {:.2f} GB".format(psutil.virtual_memory().total / 1024 / 1024 / 1024))
+        print("\nCommitted Memory(RAM): {:.2f} GB".format(psutil.virtual_memory().percent / 100 * psutil.virtual_memory().total / 1024 / 1024 / 1024))
+        print("\nCached Memory(RAM): {:.2f} GB".format(psutil.virtual_memory().cached / 1024 / 1024 / 1024))
 
         #Enable Memory Usage graph
+        print("\nTo see 15 second RAM Utilization Graph enter g. To go to System Performance menu, enter any other key.\n")
+
+        #Utilization Graph
+        if input() == "g":
+            memoryUtilGraph()
         pass
         
     elif userChoice == "3":
@@ -168,11 +171,11 @@ def cpuUtilGraph():
         y = "CPU Utilization (%)"
 
         # Loop indefinitely
-        while True:
+        for i in range(0,15):
 
             #get CPU Util & add
-            cpu_percent = psutil.cpu_percent()
-            util.append(cpu_percent)
+            cpuPercent = psutil.cpu_percent()
+            util.append(cpuPercent)
 
             #remove oldest value when exceeding axis value
             if len(util) > points:
@@ -183,14 +186,45 @@ def cpuUtilGraph():
             rows = zip(*[" " * (10 - n) + "*" * n for n in numChars])
             chart = "\n".join(["".join(row) for row in rows])
 
-            #x axis time
-            currentTime = time.time()
-            times = [currentTime - (points - i - 1) * interval for i in range(points)]
+            #print & wait
+            chart = f"{y}\n{chart}\n{x}\n"
+            print(f"{chart}") 
+            time.sleep(interval)
+
+        systemPerformance()
+
+def memoryUtilGraph():
+        
+        #local variables
+        interval = 1
+        points = 20
+        util = []
+        x = "Time (seconds)"
+        y = "Memory Utilization (%)"
+
+        # Loop indefinitely
+        for i in range(0,15):
+
+            #get CPU Util & add
+            memPercent = psutil.virtual_memory().percent
+            util.append(memPercent)
+
+            #remove oldest value when exceeding axis value
+            if len(util) > points:
+                util.pop(0)
+
+            #set up the bar chart
+            numChars = [int(util / 5) for util in util]
+            rows = zip(*[" " * (10 - n) + "*" * n for n in numChars])
+            chart = "\n".join(["".join(row) for row in rows])
 
             #print & wait
             chart = f"{y}\n{chart}\n{x}\n"
-            print(f"\033c{chart}") 
+            print(f"{chart}") 
             time.sleep(interval)
+
+        systemPerformance()
+
 
 #systemEnergy():
 def systemEnergy():
