@@ -90,7 +90,7 @@ def systemPerformance():
 
     if userChoice == "1":
 
-        #CPU Usage - util, speed, num processes, threads, uptime, caches
+        #CPU Usage
         print("\n CPU Utilization: " + str(psutil.cpu_percent()) + "%")
         ghz = psutil.cpu_freq().current / 1000
         print("\n CPU Speed: {:.2f}".format(ghz) + " GHz")
@@ -99,18 +99,15 @@ def systemPerformance():
         print("\n System Uptime: " + str(psutil.boot_time()) + "seconds")
         print("\n System Cache: " + str(psutil.disk_usage('/').percent))
 
-        #prompt user
+        #Enable CPU Utilization Graph
         print("\nTo see 15 second CPU Utilization Graph enter g. To go to System Performance menu, enter any other key.\n")
-
-        #Utilization Graph
         if input() == "g":
             cpuUtilGraph()
 
 
     elif userChoice == "2":
         
-        
-        #Memory - in use, speed, committed, cached
+        #Memory
         print("\nCurrent Memory(RAM) Usage: {:.2f} GB".format(psutil.virtual_memory().used / 1024 / 1024 / 1024))
         print("\nTotal Memory(RAM): {:.2f} GB".format(psutil.virtual_memory().total / 1024 / 1024 / 1024))
         print("\nCommitted Memory(RAM): {:.2f} GB".format(psutil.virtual_memory().percent / 100 * psutil.virtual_memory().total / 1024 / 1024 / 1024))
@@ -118,21 +115,20 @@ def systemPerformance():
 
         #Enable Memory Usage graph
         print("\nTo see 15 second RAM Utilization Graph enter g. To go to System Performance menu, enter any other key.\n")
-
-        #Utilization Graph
         if input() == "g":
             memoryUtilGraph()
-        pass
         
     elif userChoice == "3":
         
-        #Disk - active time, avg response time, read speed, write speed, capacity
-        print("Disk Active Time: {}%".format(psutil.disk_io_counters().busy_time))
-        print("Average Response Time: {} ms".format(psutil.disk_io_counters().average_time))
-        print("Read Speed: {:.2f} GB/s".format(psutil.disk_io_counters().read_bytes/1024/1024/1024))
-        print("Write Speed: {:.2f} GB/s".format(psutil.disk_io_counters().write_bytes/1024/1024/1024))
-        print("Disk Capacity: {:.2f} GB".format(psutil.disk_usage('/').total/1024/1024/1024))
-        print("Number of Partitions: ", len(psutil.disk_partitions()))
+        #Disk
+        print("\nDisk Capacity: {:.2f} GB".format(psutil.disk_usage('/').total/1024/1024/1024))
+        print("\nDisk Read Count: {}".format(psutil.disk_io_counters().read_count))
+        print("\nDisk Read Time: {} ms".format(psutil.disk_io_counters().read_time))
+        print("\nDisk Write Count: {}".format(psutil.disk_io_counters().write_count))
+        print("\nDisk Write Time: {} ms".format(psutil.disk_io_counters().write_time))
+        print("\nRead Speed: {:.2f} GB/s".format(psutil.disk_io_counters().read_bytes/1024/1024/1024))
+        print("\nWrite Speed: {:.2f} GB/s".format(psutil.disk_io_counters().write_bytes/1024/1024/1024))
+        print("\nNumber of Partitions: ", len(psutil.disk_partitions()))
 
         #Enable active time graph
         
@@ -140,7 +136,7 @@ def systemPerformance():
         
     elif userChoice == "4":
         
-        #GPU - utilization, GPU mem
+        #GPU
 
         #Enable 3D graph?
         
