@@ -6,7 +6,6 @@ import psutil
 import platform
 import time
 
-
 #mainMenu(): Display a main menu to the user to navigate program
 def mainMenu():
 
@@ -15,7 +14,7 @@ def mainMenu():
     print("Select an option to continue:\n")
 
     #Menu choices
-    print("1) System Hardware Information")
+    print("1) Basic Hardware Information")
     print("2) System Performance")
     print("3) System Energy Usage")
     print("4) Current Processes")
@@ -50,7 +49,7 @@ def mainMenu():
     #call mainMenu() to continue to show options
     mainMenu()
 
-#hardwareInfo(): Displays basic hardware components of system
+#hardwareInfo(): Displays surface level inforation of the system
 def hardwareInfo():
 
     #print hardware information
@@ -70,7 +69,7 @@ def hardwareInfo():
 
     print("\n")
 
-#systemPerformance(): 
+#systemPerformance(): Goes in depth information for system components
 def systemPerformance():
 
     #Title
@@ -81,9 +80,8 @@ def systemPerformance():
     print("1) Show CPU Performance")
     print("2) Show Memory Performance")
     print("3) Show Disk Performance")
-    print("4) Show GPU Performance")
-    print("5) Return to Main Menu")
-    print("6) Quit Program\n")
+    print("4) Return to Main Menu")
+    print("5) Quit Program\n")
 
     #Prompt user input
     userChoice = input("Enter a menu option (1-6): ")
@@ -96,7 +94,6 @@ def systemPerformance():
         print("\n CPU Speed: {:.2f}".format(ghz) + " GHz")
         print("\n Number of Processes Running: " + str(len(psutil.pids())))
         print("\n Number of Threads: " + str(psutil.Process().num_threads()))
-        print("\n System Uptime: " + str(psutil.boot_time()) + "seconds")
         print("\n System Cache: " + str(psutil.disk_usage('/').percent))
 
         #Enable CPU Utilization Graph
@@ -121,26 +118,14 @@ def systemPerformance():
     elif userChoice == "3":
         
         #Disk
-        print("\nDisk Capacity: {:.2f} GB".format(psutil.disk_usage('/').total/1024/1024/1024))
+        print("\nDisk Capacity: {:.2f} GB".format(psutil.disk_usage('/').total / 1024 / 1024 / 1024))
+        print("\nUsed Memory: {:.2f} GB".format(psutil.disk_usage('/').used / 1024 / 1024 / 1024))
         print("\nDisk Read Count: {}".format(psutil.disk_io_counters().read_count))
-        print("\nDisk Read Time: {} ms".format(psutil.disk_io_counters().read_time))
         print("\nDisk Write Count: {}".format(psutil.disk_io_counters().write_count))
-        print("\nDisk Write Time: {} ms".format(psutil.disk_io_counters().write_time))
-        print("\nRead Speed: {:.2f} GB/s".format(psutil.disk_io_counters().read_bytes/1024/1024/1024))
-        print("\nWrite Speed: {:.2f} GB/s".format(psutil.disk_io_counters().write_bytes/1024/1024/1024))
+        print("\nRead Speed: {:.2f} GB/s".format(psutil.disk_io_counters().read_bytes / 1024 / 1024 / 1024))
+        print("\nWrite Speed: {:.2f} GB/s".format(psutil.disk_io_counters().write_bytes / 1024 / 1024 / 1024))
         print("\nNumber of Partitions: ", len(psutil.disk_partitions()))
 
-        #Enable active time graph
-        
-        pass
-        
-    elif userChoice == "4":
-        
-        #GPU
-
-        #Enable 3D graph?
-        
-        pass
         
     elif userChoice == "5":
         #Call to function that handles the main menu
@@ -153,10 +138,9 @@ def systemPerformance():
     else:
         #Error handler
         print("Invalid choice. Please enter a menu option again.")
-
-    if(userChoice != 5):
         systemPerformance()
 
+#cpuUtilGraph(): Graphs CPU Utilization for 15 seconds
 def cpuUtilGraph():
 
         #local variables
@@ -166,7 +150,7 @@ def cpuUtilGraph():
         x = "Time (seconds)"
         y = "CPU Utilization (%)"
 
-        # Loop indefinitely
+        #loop 15 seconds
         for i in range(0,15):
 
             #get CPU Util & add
@@ -177,18 +161,19 @@ def cpuUtilGraph():
             if len(util) > points:
                 util.pop(0)
 
-            #set up the bar chart
+            #set up the bar chart -> each * is ~5% util
             numChars = [int(util / 5) for util in util]
             rows = zip(*[" " * (10 - n) + "*" * n for n in numChars])
             chart = "\n".join(["".join(row) for row in rows])
 
             #print & wait
-            chart = f"{y}\n{chart}\n{x}\n"
+            chart = f"{y} {cpuPercent} \n {chart} \n {x} \n"
             print(f"{chart}") 
             time.sleep(interval)
 
         systemPerformance()
 
+#memoryUtilGraph(): Graphs RAM Uttilization for 15 seconds
 def memoryUtilGraph():
         
         #local variables
@@ -198,10 +183,10 @@ def memoryUtilGraph():
         x = "Time (seconds)"
         y = "Memory Utilization (%)"
 
-        # Loop indefinitely
+        #loop 15 seconds
         for i in range(0,15):
 
-            #get CPU Util & add
+            #get Mem Util & add
             memPercent = psutil.virtual_memory().percent
             util.append(memPercent)
 
@@ -209,27 +194,20 @@ def memoryUtilGraph():
             if len(util) > points:
                 util.pop(0)
 
-            #set up the bar chart
-            numChars = [int(util / 5) for util in util]
+            #set up the bar chart -> each * is ~10% util
+            numChars = [int(util / 10) for util in util]
             rows = zip(*[" " * (10 - n) + "*" * n for n in numChars])
             chart = "\n".join(["".join(row) for row in rows])
 
             #print & wait
-            chart = f"{y}\n{chart}\n{x}\n"
+            chart = f"{y} {memPercent} \n {chart} \n {x} \n"
             print(f"{chart}") 
             time.sleep(interval)
+            
 
         systemPerformance()
 
-
-#systemEnergy():
-def systemEnergy():
-
-
-
-    pass
-
-#processInfo(): Function containing menu logic and calculations involving the process option
+#processInfo(): Displays Process Information
 def processInfo():
 
     #Title
@@ -347,11 +325,9 @@ def processInfo():
     else:
         #Error handler
         print("Invalid choice. Please enter a menu option again.")
-
-    if(userChoice != 9):
         processInfo()
 
-#processControl(): Helper function that deals with the process control functionality and logic
+#processControl(): Helper function for in depth process information
 def processControl():
 
     #Title
@@ -432,11 +408,9 @@ def processControl():
     else:
         #Error handler
         print("Invalid choice. Please enter a menu option again.")
+        processControl()
 
-    #Repeat until user selects to return to previous menu
-    processControl()
-
-#networkInfo():
+#networkInfo(): Displays Network Information
 def networkInfo():
      #Title
     print("\nNetwork Information Menu:")
@@ -480,7 +454,7 @@ def networkInfo():
     if(userChoice != 5):
         networkInfo()
 
-#netowrkConnections():
+#netowrkConnections(): Helper function for in depth network information
 def networkConnections():
      #Title
     print("\nConnection Types Menu:")
@@ -520,8 +494,6 @@ def networkConnections():
     else:
         #Error handler
         print("Invalid choice. Please enter a menu option again.")
-
-    if(userChoice != 5):
         networkConnections()
 
 #Call mainMenu() to start program
