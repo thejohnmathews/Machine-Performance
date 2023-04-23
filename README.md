@@ -9,3 +9,5 @@ General topic: Develop an open source tool (command-line or visual) that monitor
 performance or network performance.
 
 Our project: We have created a command-line tool for Ubuntu Linux Distrobutions that tells the user in depth information about system hardware and allows them to control certain aspects of the system processes.
+
+Project Demo: https://youtu.be/CoIdFFmD2GY
