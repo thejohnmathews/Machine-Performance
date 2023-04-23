@@ -2,7 +2,7 @@
 
 Group project for CPSC 4240 System Administration and Security.
 
-John Mathews
+John Mathews &
 Michael Harris
 
 General topic: Develop an open source tool (command-line or visual) that monitors system
