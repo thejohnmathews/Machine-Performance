@@ -16,10 +16,9 @@ def mainMenu():
     #Menu choices
     print("1) Basic Hardware Information")
     print("2) System Performance")
-    print("3) System Energy Usage")
-    print("4) Current Processes")
-    print("5) Network Information")
-    print("6) Quit Program\n")
+    print("3) Current Processes")
+    print("4) Network Information")
+    print("5) Quit Program\n")
 
     #Prompt user input
     userChoice = input("Enter a menu option (1-6): ")
@@ -30,17 +29,14 @@ def mainMenu():
 
     elif userChoice == "2":
         systemPerformance()
-    
-    elif userChoice == "3":
-        pass
         
-    elif userChoice == "4":
+    elif userChoice == "3":
         processInfo()
 
-    elif userChoice == "5":
+    elif userChoice == "4":
         networkInfo()
 
-    elif userChoice == "6":
+    elif userChoice == "5":
         exit()
 
     else:
@@ -57,7 +53,7 @@ def hardwareInfo():
     print("CPU Cores: " + str(psutil.cpu_count(logical = False)) + " physical, " + str(psutil.cpu_count()) + " total")
     print("RAM: " + str(psutil.virtual_memory().total / 1024 / 1024) + " MB")
     print("Swap: " + str(psutil.swap_memory().total / 1024 / 1024) + " MB")
-    print("Disk Usage: " + str(psutil.disk_usage('/').used / 1024 / 1024) + " MB used out of " + str(psutil.disk_usage('/').total / 1024 / 1024) + " MB")
+    print("Disk Usage: " + str(psutil.disk_usage('/').used / 1024 / 1024 / 1024) + " GB used out of " + str(psutil.disk_usage('/').total / 1024 / 1024 / 1024) + " GB")
     print("Boot Time: " + str(psutil.boot_time()))
     print("Sensor Temperatures: " + str(psutil.sensors_temperatures()))
     print("Sensor Fans: " + str(psutil.sensors_fans()))
@@ -127,18 +123,18 @@ def systemPerformance():
         print("\nNumber of Partitions: ", len(psutil.disk_partitions()))
 
         
-    elif userChoice == "5":
+    elif userChoice == "4":
         #Call to function that handles the main menu
         mainMenu()
         
-    elif userChoice == "6":
+    elif userChoice == "5":
         #Call to exit program
         exit()
 
     else:
         #Error handler
         print("Invalid choice. Please enter a menu option again.")
-        systemPerformance()
+    systemPerformance()
 
 #cpuUtilGraph(): Graphs CPU Utilization for 15 seconds
 def cpuUtilGraph():
@@ -325,7 +321,8 @@ def processInfo():
     else:
         #Error handler
         print("Invalid choice. Please enter a menu option again.")
-        processInfo()
+
+    processInfo()
 
 #processControl(): Helper function for in depth process information
 def processControl():
@@ -408,7 +405,7 @@ def processControl():
     else:
         #Error handler
         print("Invalid choice. Please enter a menu option again.")
-        processControl()
+    processControl()
 
 #networkInfo(): Displays Network Information
 def networkInfo():
@@ -494,7 +491,7 @@ def networkConnections():
     else:
         #Error handler
         print("Invalid choice. Please enter a menu option again.")
-        networkConnections()
+    networkConnections()
 
 #Call mainMenu() to start program
 mainMenu()
